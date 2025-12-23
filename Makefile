@@ -42,7 +42,7 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
-APP_VERSION	:=	1.0.6
+APP_VERSION	:=	1.0.7
 
 ifeq ($(RELEASE),)
 	APP_VERSION	:=	$(APP_VERSION)-$(shell git describe --dirty --always)
@@ -167,6 +167,12 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@rm -rf out
+	@mkdir -p out/atmosphere/contents/420000000007E51A/flags
+	@touch out/atmosphere/contents/420000000007E51A/flags/boot2.flag
+	@cp $(TARGET).nsp out/atmosphere/contents/420000000007E51A/exefs.nsp
+	@cp toolbox.json out/atmosphere/contents/420000000007E51A/
+	@echo [DONE] $(TARGET) compiled successfully. All files have been placed in out/
 
 #---------------------------------------------------------------------------------
 clean:
